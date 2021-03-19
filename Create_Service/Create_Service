@@ -1,0 +1,74 @@
+<? php
+
+#### APIX Service ####
+
+## BcRatherNum Service
+sc.exe create "Star BcRatherNum Service" binpath=D:\app\BlockChainRaherNum\BlockChainRaherNum.exe start=auto displayname="Star BcRatherNum Service"
+
+
+## Star CaiPiaoApi Service
+sc.exe create "Star CaiPiaoApi Service" binpath=D:\app\CaiPiaoAPI\CaiPiaoAPI.exe start=auto displayname="Star CaiPiaoApi Service"
+
+
+## Star DuoCaiApi Service
+sc.exe create "Star DuoCaiApi Service" binpath=D:\app\DuoCaiApi\DuoCaiApi.exe start=auto displayname="Star DuoCaiApi Service"
+
+
+## Star HboRatherNum Service
+sc.exe create "Star HboRatherNum Service" binpath=D:\app\HboRathreNum\HboRathreNum.exe start=auto displayname="Star HboRatherNum Service"
+
+
+## Star LotteryRiskControl Service
+sc.exe create "Star LotteryRiskControl Service" binpath=D:\app\LotteryRiskControl\LotteryRiskControl.exe start=auto displayname="Star LotteryRiskControl Service"
+
+
+## Star LuckyAirShip168 Service
+sc.exe create "Star LuckyAirShip168 Service" binpath=D:\app\LuckyAirShip168\LuckyAirShip168.exe start=auto displayname="Star LuckyAirShip168 Service"
+
+
+## OpenCaiSchedule
+sc.exe create "OpenCaiSchedule" binpath=D:\app\OpenCaiSchedule\OpenCaiSchedule.exe start=auto displayname="Star OpenCaiSchedule Service"
+
+
+## XingCaiSchedule
+sc.exe create "XingCaiSchedule" binpath=D:\app\XingCaiSchedule\XingCaiSchedule.exe start=auto displayname="Star XingCaiSchedule Service"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Web Service ####
+
+## Star Third Party Bet History Service
+sc.exe create "TpBetHistoryWorker" binpath=D:\app\TpBetHistoryWorker\TpBetHistoryWorker.exe start=disabled displayname="Star Third Party Bet History Service"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Service Server ####
+
+## Star ActivityWorker
+sc.exe create "ActivityWorker" binpath=D:\app\ActivityWorker\ActivityWorker.exe start=auto displayname="Star ActivityWorker"
+
+## Star GatherLotteryNumber Service
+sc.exe create "Star GatherLotteryNumber Service" binpath=D:\app\GatherLotteryNumber\GatherLotteryNumber.exe start=auto displayname="Star GatherLotteryNumber Service"
+
+## Star PushSender Service
+sc.exe create "Star PushSender Service" binpath=D:\app\PushSender\PushSender.exe start=auto displayname="Star PushSender Service"
+
+## 餘額寶定時排程
+sc.exe create "YuEbaoScheduleService" binpath=D:\app\YuEbaoSchedule\YuEbaoSchedule.exe start=auto displayname="餘額寶定時排程"
+
+\\**RiskFlagAutoService**//
+cmd - > D:\app\RiskFlag\RiskFlag.exe install
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#### API Server ####
+
+## Star Third Party Service
+sc.exe create "ThirdPartyService" binpath=D:\app\ThirdPartyService\ThirdPartyService.exe start=auto displayname="Star Third Party Service"
+
+## Star Payment Service
+sc.exe create "PaymentService" binpath=D:\app\PaymentService\PaymentService.exe start=auto displayname="Star Payment Service"
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+?>

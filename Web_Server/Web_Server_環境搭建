@@ -1,0 +1,166 @@
+<?php 
+
+#### Windows Server 搭建 Web 站台注意事項 ####
+
+## WEB環境搭建 & 注意事項 ##
+## 通常用在移機及新建，會碰到的一些問題及疑問在這邊做一個整理
+## 過去碰到的一些小問題，任何一個步驟若缺少，將導致需要停機維護 
+## 另外 在每個公司環境不同會有不一樣的配置
+## 僅供參考
+
+--------------------------------------------------------
+
+## Web 配置 ##
+
+1. 虛擬機上的『硬體配置』
+
+##『CPU』
+##『記憶體』
+##『硬碟』
+##『網路卡』
+## 是否符合WEB環境
+
+--------------------------------------------------------
+
+2. 伺服器上的依賴套件與軟體，常見的有 
+
+## 『.NET Core』
+## 『Vusual C++』
+## 『Web Deploy』等
+
+--------------------------------------------------------
+
+3. 環境變數 
+## 變數名稱：『ASPNETCORE_ENVIRONMENT』 
+## 變數值：『Production』。
+
+--------------------------------------------------------
+
+4. 日期/時間/時區 格式，24小時制,12小時制，可能影響在代理後台運行。
+
+##  機碼修正  ##
+##  HKEY_USER/DEFAULT/ControlPannel/International/sShortTime  ， 『sShortTime』值改為『H:mm』
+##  HKEY_USER/DEFAULT/ControlPannel/International/sTimeFormat ， 『sTimeFormat』值改為『H:mm:ss』
+
+## 右下時間格式修正 ##
+##『簡短時間』=『H:mm』
+##『完整時間』=『H:mm:ss』
+
+--------------------------------------------------------
+
+5. 電腦名稱
+
+## 修正為平台+站台格式，比如Agent-Web01 、 Agent-Web02
+
+--------------------------------------------------------
+
+6. 遷移站台
+
+## 有很多方式，且我的方式不是最快也不是最方便，未來還有很大進步空間，我先講解我的模式
+
+## 打包 ##
+## 針對每個現行運作的IIS站台目錄直接做打包動作，並將壓縮檔移轉到新站台
+## 缺點：最好移轉後，原站台在打包一次，前後做一次打包大小作核對，曾經有解不開情況
+
+## 新站台解壓縮 ##
+## 當打包到新站台後進行相同目錄的解壓縮，確認目錄結構與原站台相同。
+
+\**確認目錄解壓縮後，不要急著掛上站台，這點非常重要**/
+\**接下來是最麻煩且最重要的部分做錯將會導致資料寫到資料庫**/
+
+## 修改所有 『DB Connection字串』##
+## SystemConfig & SystemConfig2 ##
+## 需要使用 『EncryptSqlCon.exe』工具##
+## 修正到對應的DB IP、ID、Password
+## 通常會碰到的有 『Web.config』、『appsettings』、『少數的 *.exe.config』
+## 確保所有字串正確後才進行掛上IIS站台
+## 掛上後確保IP與PORT的配置是否正確。
+
+--------------------------------------------------------
+
+7. 確認防火牆
+
+## 內部、外部、NAT、防火牆配置
+## 若任何一配置錯誤，會導致Nginx、LBS反代錯誤
+
+--------------------------------------------------------
+
+8. 創建各服務
+
+#### APIX Service ####
+
+## BcRatherNum Service
+sc.exe create "Star BcRatherNum Service" binpath=D:\app\BlockChainRaherNum\BlockChainRaherNum.exe start=auto displayname="Star BcRatherNum Service"
+
+
+## Star CaiPiaoApi Service
+sc.exe create "Star CaiPiaoApi Service" binpath=D:\app\CaiPiaoAPI\CaiPiaoAPI.exe start=auto displayname="Star CaiPiaoApi Service"
+
+
+## Star DuoCaiApi Service
+sc.exe create "Star DuoCaiApi Service" binpath=D:\app\DuoCaiApi\DuoCaiApi.exe start=auto displayname="Star DuoCaiApi Service"
+
+
+## Star HboRatherNum Service
+sc.exe create "Star HboRatherNum Service" binpath=D:\app\HboRathreNum\HboRathreNum.exe start=auto displayname="Star HboRatherNum Service"
+
+
+## Star LotteryRiskControl Service
+sc.exe create "Star LotteryRiskControl Service" binpath=D:\app\LotteryRiskControl\LotteryRiskControl.exe start=auto displayname="Star LotteryRiskControl Service"
+
+
+## Star LuckyAirShip168 Service
+sc.exe create "Star LuckyAirShip168 Service" binpath=D:\app\LuckyAirShip168\LuckyAirShip168.exe start=auto displayname="Star LuckyAirShip168 Service"
+
+
+## OpenCaiSchedule
+sc.exe create "OpenCaiSchedule" binpath=D:\app\OpenCaiSchedule\OpenCaiSchedule.exe start=auto displayname="Star OpenCaiSchedule Service"
+
+
+## XingCaiSchedule
+sc.exe create "XingCaiSchedule" binpath=D:\app\XingCaiSchedule\XingCaiSchedule.exe start=auto displayname="Star XingCaiSchedule Service"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Web Service ####
+
+## Star ActivityWorker
+sc.exe create "ActivityWorker" binpath=D:\app\ActivityWorker\ActivityWorker.exe start=auto displayname="Star ActivityWorker"
+
+## Star GatherLotteryNumber Service
+sc.exe create "Star GatherLotteryNumber Service" binpath=D:\app\GatherLotteryNumber\GatherLotteryNumber.exe start=auto displayname="Star GatherLotteryNumber Service"
+
+## Star Payment Service
+sc.exe create "PaymentService" binpath=D:\app\PaymentService\PaymentService.exe start=auto displayname="Star Payment Service"
+
+## Star PushSender Service
+sc.exe create "Star PushSender Service" binpath=D:\app\PushSender\PushSender.exe start=auto displayname="Star PushSender Service"
+
+## Star Third Party Bet History Service
+sc.exe create "TpBetHistoryWorker" binpath=D:\app\TpBetHistoryWorker\TpBetHistoryWorker.exe start=auto displayname="Star Third Party Bet History Service"
+
+## Star Third Party Service
+sc.exe create "ThirdPartyService" binpath=D:\app\ThirdPartyService\ThirdPartyService.exe start=auto displayname="Star Third Party Service"
+
+## 餘額寶定時排程
+sc.exe create "YuEbaoScheduleService" binpath=D:\app\YuEbaoSchedule\YuEbaoSchedule.exe start=auto displayname="餘額寶定時排程"
+
+
+\\**RiskFlagAutoService**//
+cmd - > D:\app\RiskFlag\RiskFlag.exe install
+
+\\**Lottery Tools**//
+## 極重要，不管有幾個站台一次只能啟動一個
+## 且字串需要修改 通常為NotePad++ 內的New1
+
+
+--------------------------------------------------------
+
+9. 建立各個站台 注意IP與PORT的對應
+
+## 再次確認『6. 遷移站台』
+## 所有字串的部分是否修改正確 極為重要
+
+--------------------------------------------------------
+
+?>
